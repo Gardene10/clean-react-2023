@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/indent */
 
-import { url } from 'inspector'
-import { type } from 'os'
 import { HttpPostClientSpy } from '../../test/mock-http-client'
 import { RemoteAuthentication } from './remore-authentication'
+import faker from 'faker'
 
 type SutTypes = {
  sut: RemoteAuthentication
