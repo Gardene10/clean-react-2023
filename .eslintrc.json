@@ -9,6 +9,6 @@
     "rules": {
         "@typescript-eslint/consistent-type-definitions":"off",
         "@typescript-eslint/strict-boolean-expressions":"off",
-        "camelcase": "off"
+        "@typescript-eslint/naming-convention": "off"
     }
 }
