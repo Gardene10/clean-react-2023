@@ -24,14 +24,14 @@ const makeSut = (url: string = faker.internet.url()): SutTypes => {
 }
 
 describe('RemoteAuthentication', () => {
-    test('should call Http with correct URL', async () => {
+    test('Should call Http with correct URL', async () => {
         const url = faker.internet.url()
         const { sut, httpPostClientSpy } = makeSut(url)
         await sut.auth(mockAuthentication())
         expect(httpPostClientSpy.url).toBe(url)
     })
 
-    test('should call Http with correct body', async () => {
+    test('Should call Http with correct body', async () => {
         const authenticationParams = mockAuthentication()
         const { sut, httpPostClientSpy } = makeSut()
         await sut.auth(authenticationParams)
@@ -42,7 +42,7 @@ describe('RemoteAuthentication', () => {
         
         const { sut, httpPostClientSpy } = makeSut()
         httpPostClientSpy.response = {
-        statusCode: HttpStausCode.unathorazed
+        statusCode: HttpStausCode.unauthorized
         }
         const promise = sut.auth(mockAuthentication())
         await expect(promise).rejects.toThrow(new InvalidCredentialsError())

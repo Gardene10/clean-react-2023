@@ -20,7 +20,7 @@ export class RemoteAuthentication implements Authentication {
     switch (httpResponse.statusCode){
       case HttpStausCode.ok: return httpResponse.body
       
-      case HttpStausCode.unathorazed: throw new InvalidCredentialsError()
+      case HttpStausCode.unauthorized: throw new InvalidCredentialsError()
       default: throw new UnexpectedError()
     }
   }
