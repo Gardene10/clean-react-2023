@@ -1,4 +1,4 @@
-import { type } from "os"
+
 import React from "react"
 import Styles from './spinner-styles.scss'
 
