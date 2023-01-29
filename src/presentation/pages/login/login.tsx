@@ -9,7 +9,8 @@ const Login: React.FC =() => {
 
             <form className={Styles.form}>
                 <h2>Login</h2>
-                <Input/>
+
+                
                 
                 <input type="email" name="email" placeholder="Digite seu e-mail" />
                 <input type="password" name="password" placeholder="Digite sua senha" />
