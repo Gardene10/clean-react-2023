@@ -5,7 +5,7 @@ import Logo from "@/presentation/components/logo/logo";
 import { memo } from 'react';
 
 
-const LoginHeader: React.FC = () => {
+const LoginHeader: React.FC= () => {
     return (
         <header className={Styles.header}>
         <Logo />

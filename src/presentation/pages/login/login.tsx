@@ -1,32 +1,45 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import Styles from './login-styles.scss'
-import { LoginHeader, FormStatus,Input,Footer} from "@/presentation/components";
+import {LoginHeader, FormStatus,Input,Footer, Spinner} from "@/presentation/components";
 import Context from '@/presentation/contexts/form/form-context'
+import { Validation } from "@/presentation/protocols/validation";
 
 
-const Login: React.FC =() => {
-   const [state] = useState({
+type Props = {
+    validation: Validation
+}
+
+const Login: React.FC=({validation}:Props) => { //tirei o <Props>
+   const [state,setState] = useState({
+    email:'',
     isLoading: false,
-    emailError: 'Campo obrigatório',
-    passwordError: 'Campo obrigatório'
+    mainError:'',
+    emailError:'campo obrigatorio',
+    passwordError:'campo obrigatorio'
 
    })
+   useEffect(()=> {
+    validation.validate({ email: state.email})
+   },[state.email])
 
     return (
         <div className={Styles.login}>
             <LoginHeader/>
 
-            <Context.Provider value={state}>
+            <Context.Provider value={{state,setState}}>
 
             <form className={Styles.form}>
                 <h2>Login</h2>
-
-                <input  type="email" name="email" placeholder="Digite seu e-mail" />
-                <input  type="password" name="password" placeholder="Digite sua senha" />
+                <Input type="email" name="email" placeholder="Digite seu e-mail"/>
+                <Input type="password" name="password" placeholder="Digite sua senha"/>
 
                 <button data-testid="submit" disabled className={Styles.submit} type="submit">Entrar</button>
                 <span className={Styles.link}>Criar conta</span>
-                
+                <div className={Styles.errorWrap}>
+                    <Spinner className={Styles.spinner}/>
+                    <span className={Styles.error}>Erro</span>
+                </div>
+
                 <FormStatus/>
             </form>
 
