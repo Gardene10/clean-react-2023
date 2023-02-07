@@ -41,7 +41,7 @@ const Login: React.FC<Props>=({validation}: Props) => {
                 <Input type="email" name="email" placeholder="Digite seu e-mail"/>
                 <Input type="password" name="password" placeholder="Digite sua senha"/>
 
-                <button data-testid="submit" disabled className={Styles.submit} type="submit">Entrar</button>
+                <button data-testid="submit" disabled={!!state.emailError || !!state.passwordError} className={Styles.submit} type="submit">Entrar</button>
                 <span className={Styles.link}>Criar conta</span>
                 <div className={Styles.errorWrap}>
                     <Spinner className={Styles.spinner}/>
@@ -59,3 +59,5 @@ const Login: React.FC<Props>=({validation}: Props) => {
 }
 
 export default Login 
+
+// aqui o type script nao permite comparar dessa forma ...disabled={!!state.emailError || !!state.passwordError} entao adicionando as !! ele converte para boolean e deixa passar
