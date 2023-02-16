@@ -1,12 +1,12 @@
 import React from 'react'
+import { Router} from 'react-router-dom'
+import { createMemoryHistory } from 'history' 
 import Faker from 'faker'
 import 'jest-localstorage-mock'
 import {render,RenderResult,fireEvent,cleanup,waitFor} from '@testing-library/react'
 import Login from './login'
 import { ValidationStub, AuthenticationSpy } from '@/presentation/test'
 import { InvalidCredentialsError } from '@/domain/errors'
-
-
 
 
 type SutTypes = {
@@ -18,15 +18,21 @@ type SutTypes = {
 type SutParams = {
   validationError: string
 }
+const history = createMemoryHistory()
 
-const makeSut = (params?:SutParams): SutTypes => {    // (params?:SutParams) está opcional so quem precisar desse parametro será chamdo
+
+function makeSut(params?: SutParams): SutTypes {
   const validationStub = new ValidationStub()
-  validationStub.errorMessage = params?.validationError
-  
   const authenticationSpy = new AuthenticationSpy()
-  
-  const sut = render(<Login validation={validationStub} authentication={authenticationSpy} />)
-  return{
+  validationStub.errorMessage = params?.validationError
+  const sut = render(
+    <Router history ={history}>
+      <Login validation={validationStub} authentication={authenticationSpy} />
+    
+    </Router>
+  )
+
+  return {
     sut,
     authenticationSpy
   }
@@ -185,6 +191,17 @@ describe('Login Component',()=> {
       simulateValidSubmit(sut) 
       await waitFor(()=> sut.findByTestId('form'))  ////mundei de getByTestId para findByTestId
       expect(localStorage.setItem).toHaveBeenCalledWith('accessToken', authenticationSpy.account.accessToken)
+      
+
+    })
+
+    test('Should go to signup page',() => {
+      const {sut} = makeSut()
+      const register = sut.getByTestId('signup')
+      fireEvent.click(register)
+      
+      expect(history.length).toBe(2)
+      expect(history.location.pathname).toBe('/signup')
       
 
     })
