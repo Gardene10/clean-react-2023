@@ -1,8 +1,6 @@
 import React from "react";
 import {  BrowserRouter ,Route, Switch } from 'react-router-dom' //Routes, // instead of "Switch"
-import { Login } from "@/presentation/pages";
-import { type } from "os";
-import '@/presentation/styles/global.scss'
+//import '@/presentation/styles/global.scss'
 
 type Props = {
 makeLogin : React.FC

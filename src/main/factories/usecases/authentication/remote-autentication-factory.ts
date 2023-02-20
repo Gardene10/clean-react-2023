@@ -1,0 +1,9 @@
+
+import { RemoteAuthentication } from "@/domain/data/usecases/authentication/remore-authentication";
+import { makeAxiosHttpClient } from "@/main/factories/http/axios-http-client-factory";
+import { Authentication } from "@/domain/usecases";
+import { makeApiUrl } from "@/main/factories/http/api-url-factory";
+
+export const makeRemoteAuthentication = (): Authentication => {
+   return new RemoteAuthentication(makeApiUrl(), makeAxiosHttpClient())
+}
