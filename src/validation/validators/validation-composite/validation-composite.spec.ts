@@ -1,5 +1,5 @@
 
-import { FieldvalidationSpy } from "../test/mock-field-validation"
+import { FieldvalidationSpy } from "@/validation/test/mock-field-validation"
 import { ValidationComposite } from "./validation-composite"
 import faker from 'faker'
 
