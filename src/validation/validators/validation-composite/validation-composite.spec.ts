@@ -15,15 +15,13 @@ const makeSut = (fieldName : string ): sutTypes => {
 
    ]
     
-    const sut = new ValidationComposite(fieldvalidationsSpy)
+    const sut = ValidationComposite.build(fieldvalidationsSpy)
     return {
         sut,
         fieldvalidationsSpy
     }
 
 }
-
-
 describe('ValidationComposite',() => {
     test('Shold return error if any validation fails',() =>{
         const fieldName = faker.database.collation()
