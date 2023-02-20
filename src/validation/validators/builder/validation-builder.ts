@@ -1,5 +1,5 @@
 import { FieldValidation } from "@/validation/protocols/field-validation"
-import { RequiredFieldValidation } from "@/validation/validators"
+import { RequiredFieldValidation, EmailValidation } from "@/validation/validators"
 
 export class ValidationBuilder {
     private constructor(
@@ -15,6 +15,13 @@ export class ValidationBuilder {
         return this
 
     }
+
+    email(): ValidationBuilder{
+        this.validations.push(new EmailValidation(this.fieldName))
+        return this
+
+    }
+
     build (): FieldValidation[] {
         return this.validations
 
