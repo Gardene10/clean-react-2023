@@ -1,17 +1,18 @@
 {
   "name": "clean-react",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "NodeJs Rest API using clean Architercture and typescript",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open",
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage"
+    "test:ci": "npm test -- --coverage" 
+    
   },
   "keywords": [],
-  "author": "",
+  "author": "Gardene",
   "license": "ISC",
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
