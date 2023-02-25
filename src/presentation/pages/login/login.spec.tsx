@@ -206,6 +206,18 @@ describe('Login Component',()=> {
 
     })
 
+    test('Should present error if SaveAccess fails',async () => {
+      const {sut,saveAccessTokenMock } = makeSut()
+      const error = new InvalidCredentialsError()
+      jest.spyOn(saveAccessTokenMock,'save').mockReturnValueOnce(Promise.reject(error))
+      await simulateValidSubmit(sut)
+      const mainError = sut.findByTestId('main-error')    //mundei de getByTestId para findByTestId
+      expect((await mainError).textContent).toBe(error.message)
+      testErrorWrapChildCount(sut,1)
+      
+
+    })
+
     test('Should go to signup page',() => {
       const {sut} = makeSut()
       const register = sut.getByTestId('signup')
