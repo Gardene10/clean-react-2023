@@ -1,4 +1,11 @@
-import { HttpPostClient, HttpPostParams, HttpResponse, HttpStausCode} from '../protocols/http'
+import { HttpPostClient, HttpPostParams, HttpResponse, HttpStausCode } from "../protocols/http";
+import faker from 'faker'
+
+export const mockPostRequest = (): HttpPostParams<any> => ({
+    url: faker.internet.url(),
+    body: faker.random.objectElement()
+
+})
 
 
 export class HttpPostClientSpy<T,R> implements HttpPostClient<T,R> {
@@ -11,7 +18,6 @@ export class HttpPostClientSpy<T,R> implements HttpPostClient<T,R> {
     async post (params: HttpPostParams<T>): Promise<HttpResponse<R>> {
       this.url = params.url
       this.body = params.body
-      //return Promise.resolve(this.response) mudei para observar
       return this.response
 
     
