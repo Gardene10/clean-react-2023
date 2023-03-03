@@ -6,6 +6,7 @@ import faker from 'faker'
 import { mockAddAccountParams } from '@/domain/test'
 import { HttpStausCode } from '../../protocols/http'
 import { EmailInUseError } from '@/domain/errors/email-in-use-error'
+import { UnexpectedError } from '@/domain/errors'
 
 
 type SutTypes = {
@@ -46,6 +47,16 @@ type SutTypes = {
         }
         const promise = sut.add(mockAddAccountParams())
         await expect(promise).rejects.toThrow(new EmailInUseError())
+    })
+
+    test('should thorw UnexpectedError if HttpPostClient returns 401', async () => {
+        
+        const { sut, httpPostClientSpy } = makeSut()
+        httpPostClientSpy.response = {
+        statusCode: HttpStausCode.badRequest
+        }
+        const promise = sut.add(mockAddAccountParams())
+        await expect(promise).rejects.toThrow(new UnexpectedError())
     })
 
 })
