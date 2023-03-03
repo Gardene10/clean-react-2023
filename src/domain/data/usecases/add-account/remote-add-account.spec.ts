@@ -59,4 +59,14 @@ type SutTypes = {
         await expect(promise).rejects.toThrow(new UnexpectedError())
     })
 
+    test('Should thorw succes if HttpPostClient returns 500', async () => {
+        
+        const { sut, httpPostClientSpy } = makeSut()
+        httpPostClientSpy.response = {
+        statusCode: HttpStausCode.severerError
+        }
+        const promise = sut.add(mockAddAccountParams())
+        await expect(promise).rejects.toThrow(new UnexpectedError())
+    })
+
 })
