@@ -4,6 +4,8 @@ import {AddAccountParams} from '@/domain/usecases'
 import { AccountModel } from '@/domain/models'
 import faker from 'faker'
 import { mockAddAccountParams } from '@/domain/test'
+import { HttpStausCode } from '../../protocols/http'
+import { EmailInUseError } from '@/domain/errors/email-in-use-error'
 
 
 type SutTypes = {
@@ -34,6 +36,16 @@ type SutTypes = {
         const { sut, httpPostClientSpy } = makeSut()
         await sut.add(addAccountParams)
         expect(httpPostClientSpy.body).toEqual(addAccountParams)
+    })
+
+    test('Should thorw EmailInUseError if HttpPostClient returns 403', async () => {
+        
+        const { sut, httpPostClientSpy } = makeSut()
+        httpPostClientSpy.response = {
+        statusCode: HttpStausCode.forbidden
+        }
+        const promise = sut.add(mockAddAccountParams())
+        await expect(promise).rejects.toThrow(new EmailInUseError())
     })
 
 })
