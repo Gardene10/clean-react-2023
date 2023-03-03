@@ -29,4 +29,11 @@ type SutTypes = {
         expect(httpPostClientSpy.url).toBe(url)
     })
 
+    test('Should call HttpPostClient with correct body', async () => {
+        const addAccountParams = mockAddAccountParams()
+        const { sut, httpPostClientSpy } = makeSut()
+        await sut.add(addAccountParams)
+        expect(httpPostClientSpy.body).toEqual(addAccountParams)
+    })
+
 })
