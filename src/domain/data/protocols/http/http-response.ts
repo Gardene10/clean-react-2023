@@ -3,6 +3,7 @@ export enum HttpStausCode {
     noContent = 204,
     badRequest = 400,
     unauthorized = 401,
+    forbidden = 401,
     noFound = 404,
     severerError = 500
     
