@@ -1,6 +1,6 @@
 import React from "react";
 import {  BrowserRouter ,Route, Switch } from 'react-router-dom' //Routes, // instead of "Switch"
-import '@/presentation/styles/global.scss'
+//import '@/presentation/styles/global.scss'
 import SignUp from "@/presentation/pages/signup/signup";
 
 type Props = {

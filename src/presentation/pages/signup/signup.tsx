@@ -1,39 +1,36 @@
-import React from "react";
-import { Link} from "react-router-dom";
+import React, { useState } from "react";
 import Styles from './signup-styles.scss'
 import {LoginHeader, FormStatus,Input,Footer, Spinner} from "@/presentation/components";
 import Context from '@/presentation/contexts/form/form-context'
 
 
-
-
 const SignUp: React.FC =() => { 
 
+    const [state] = useState({
+
+        isLoading: false,
+        nameError:'Campo Obrigatorio',
+        emailError:'Campo Obrigatorio',
+        mainlError:'',
+        passwordError:'Campo Obrigatorio',
+        passwordConfirmationError:'Campo Obrigatorio'
+       
+       })
     return (
         <div className={Styles.signup}>
             <LoginHeader/>
-
-            <Context.Provider value={{state: {}}}>
-
+            <Context.Provider value={{state}}>
             <form  className={Styles.form} >
                 <h2>Criar Conta</h2>
                 <Input type="text" name="name" placeholder="Digite seu nome"/>
                 <Input type="email" name="email" placeholder="Digite seu e-mail"/>
                 <Input type="password" name="password" placeholder="Digite sua senha"/>
                 <Input type="password" name="passwordConfirmation" placeholder="Repita sua senha"/>
-
-                <button className={Styles.submit} type="submit">Entrar</button>
-                <Link to ="/login" className={Styles.link}> Voltar para o Login</Link>
-                <div className={Styles.errorWrap}>
-                    <Spinner className={Styles.spinner}/>
-                    <span className={Styles.error}>Erro</span>
-                </div>
-
+                <button data-testid="submit" disabled className={Styles.submit} type="submit">Entrar</button>
+                <span className={Styles.link}> Voltar para o Login</span>
                 <FormStatus/>
             </form>
-
             </Context.Provider>
-
             <Footer/>
           </div>
     )
