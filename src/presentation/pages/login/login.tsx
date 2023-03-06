@@ -1,11 +1,11 @@
 import React, {useState,useEffect} from "react";
 import { Link, useHistory} from "react-router-dom";
 import Styles from './login-styles.scss'
-import {LoginHeader, FormStatus,Input,Footer, Spinner} from "@/presentation/components";
+import {Footer,Input,LoginHeader, FormStatus, Spinner} from "@/presentation/components";
 import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from "@/presentation/protocols/validation";
 import { Authentication,SaveAccessToken } from "@/domain/usecases";
-
+//testa sem o spinner
 type Props = {
     validation: Validation
     authentication: Authentication
