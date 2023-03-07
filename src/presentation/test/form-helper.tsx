@@ -26,3 +26,9 @@ export const testChildCount =(sut: RenderResult, fieldName: string, count: numbe
     const el = sut.getByTestId(fieldName)
     expect(el).toBeTruthy()
   }
+
+  export const testElementText =(sut: RenderResult, fieldName: string ,text:string): void => {
+    const el = sut.getByTestId(fieldName) 
+    expect(el.textContent).toBe(text)
+  
+  }

@@ -6,6 +6,7 @@ import {render,RenderResult,fireEvent,cleanup,waitFor} from '@testing-library/re
 import {Login} from '@/presentation/pages'
 import { ValidationStub, AuthenticationSpy , SaveAccessTokenMock, Helper} from '@/presentation/test'
 import { InvalidCredentialsError } from '@/domain/errors'
+import { testElementText } from '@/presentation/test/form-helper'
 
 type SutTypes = {
   sut: RenderResult
@@ -49,11 +50,6 @@ const simulateValidSubmit = async (sut: RenderResult, email = Faker.internet.ema
     await waitFor(()=> form)
 }
 
-const testElementText =(sut: RenderResult, fieldName: string ,text:string): void => {
-  const el = sut.getByTestId(fieldName) 
-  expect(el.textContent).toBe(text)
-
-}
 
 describe('Login Component',()=> {
   afterEach(cleanup)
@@ -139,11 +135,11 @@ test('Should not call Authentication if form is invalid',async () => {
 test('Should present error if Authentication fails',async () => {
   const {sut,authenticationSpy } = makeSut()
   const error = new InvalidCredentialsError()
-  jest.spyOn(authenticationSpy,'auth').mockReturnValueOnce(Promise.reject(error))
+  jest.spyOn(authenticationSpy,'auth').mockRejectedValueOnce(error)
   await simulateValidSubmit(sut)
-  const mainError = sut.findByTestId('main-error')    //mundei de getByTestId para findByTestId
-  expect((await mainError).textContent).toBe(error.message)
+  Helper.testElementText(sut,'main-error',error.message)
   Helper.testChildCount(sut,'error-wrap',1)
+
 })
 
 test('Should call SaveAccessToken on success',async () => {
@@ -163,13 +159,12 @@ test('Should show valid email state if Validation succeeds',() => {
 })
   
 
-    test('Should present error if SaveAccess fails',async () => {
+    test('Should present error if SaveAccessToken fails',async () => {
       const {sut,saveAccessTokenMock } = makeSut()
       const error = new InvalidCredentialsError()
       jest.spyOn(saveAccessTokenMock,'save').mockReturnValueOnce(Promise.reject(error))
       await simulateValidSubmit(sut)
-      const mainError = sut.findByTestId('main-error')    //mundei de getByTestId para findByTestId
-      expect((await mainError).textContent).toBe(error.message)
+      Helper.testElementText(sut,'main-error',error.message)
       Helper.testChildCount(sut,'error-wrap',1)
  })
 
