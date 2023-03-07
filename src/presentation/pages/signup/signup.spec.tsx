@@ -139,6 +139,13 @@ test('Should enable submit button if form is valid',() => {
  
 })
 
+test('Should show spinner on submit',async () => {
+  const {sut } = makeSut()
+  await simulateValidSubmit(sut)
+  Helper.testElementExist(sut,'spinner')
+   
+})
+
 
 })
        
