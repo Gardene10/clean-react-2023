@@ -3,11 +3,7 @@ import React from "react"
 import Faker from 'faker'
 import SignUp from "./signup"
 import { RenderResult , render, cleanup, fireEvent, waitFor} from "@testing-library/react"
-import {Helper, ValidationStub} from '@/presentation/test'
-import { AddAccount } from "@/domain/usecases"
-import { AddAccountSpy } from "@/presentation/test/mock-add-account"
-
-
+import {Helper, ValidationStub,AddAccountSpy} from '@/presentation/test'
 
 
 type SutTypes = {
@@ -147,5 +143,20 @@ test('Should show spinner on submit',async () => {
 })
 
 
+
+test('Should call Authentication with correct values',async () => {
+  const {sut, addAccountSpy} = makeSut()
+  const name = Faker.name.findName()
+  const email = Faker.internet.email()
+  const password = Faker.internet.password()          
+  await simulateValidSubmit(sut, name ,email,password)
+  expect (addAccountSpy.params).toEqual({
+    name,
+    email,
+    password,
+    passwordConfirmation:password
+
+    })  
+  })
 })
        
