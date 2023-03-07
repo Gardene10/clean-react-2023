@@ -49,11 +49,6 @@ const simulateValidSubmit = async (sut: RenderResult, email = Faker.internet.ema
     await waitFor(()=> form)
 }
 
-const testElementExist =(sut: RenderResult, fieldName: string ): void => {
-  const el = sut.getAllByTestId(fieldName) //testa com getByTestId esta assim no original
-  expect(el).toBeTruthy()
-}
-
 const testElementText =(sut: RenderResult, fieldName: string ,text:string): void => {
   const el = sut.getByTestId(fieldName) 
   expect(el.textContent).toBe(text)
@@ -115,7 +110,7 @@ test('Should enable submit button if form is valid',() => {
 test('Should show spinner on submit',async () => {
   const {sut } = makeSut()
   await simulateValidSubmit(sut)
-  testElementExist(sut,'spinner')
+  Helper.testElementExist(sut,'spinner')
    
 })
 

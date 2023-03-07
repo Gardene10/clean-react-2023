@@ -2,14 +2,17 @@
 import React from "react"
 import Faker from 'faker'
 import SignUp from "./signup"
-import { RenderResult , render, cleanup} from "@testing-library/react"
+import { RenderResult , render, cleanup, fireEvent, waitFor} from "@testing-library/react"
 import {Helper, ValidationStub} from '@/presentation/test'
+import { AddAccount } from "@/domain/usecases"
+import { AddAccountSpy } from "@/presentation/test/mock-add-account"
 
 
 
 
 type SutTypes = {
     sut: RenderResult
+    addAccountSpy: AddAccountSpy
   }
 
  type SutParams = {
@@ -19,17 +22,31 @@ type SutTypes = {
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
+  const addAccountSpy = new AddAccountSpy()
   
     const sut = render(
      <SignUp
       validation={validationStub}
+      addAccount={addAccountSpy}
      />
     )
   
     return {
-      sut
+      sut,
+      addAccountSpy
     }
   } 
+
+  const simulateValidSubmit = async (sut: RenderResult, name = Faker.name.findName() , email = Faker.internet.email(), password = Faker.internet.password()): Promise<void> => {
+    Helper.populateField(sut,'name',name)
+    Helper.populateField(sut,'email',email)
+    Helper.populateField(sut,'password',password) 
+    Helper.populateField(sut,'passwordConfirmation',password)
+    const form = sut.getByTestId('form')
+    fireEvent.submit(form)
+    await waitFor(()=> form)
+}
+
 
 
 describe('SignUp Component',()=> {
@@ -112,5 +129,16 @@ test('Should show valid passwordConfirmation state if Validation succeeds',() =>
 
 })
 
-        
-    })
+test('Should enable submit button if form is valid',() => {
+  const {sut } = makeSut()
+  Helper.populateField(sut,'name')
+  Helper.populateField(sut,'email')
+  Helper.populateField(sut,'password')
+  Helper.populateField(sut,'passwordConfirmation')
+  Helper.testButtonIsDisable(sut,'submit',false)   
+ 
+})
+
+
+})
+       
