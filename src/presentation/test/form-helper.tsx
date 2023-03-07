@@ -23,6 +23,6 @@ export const testChildCount =(sut: RenderResult, fieldName: string, count: numbe
   } 
 
   export const testElementExist =(sut: RenderResult, fieldName: string ): void => {
-    const el = sut.getByTestId(fieldName) //testa com getByTestId esta assim no original
+    const el = sut.getByTestId(fieldName)
     expect(el).toBeTruthy()
   }
