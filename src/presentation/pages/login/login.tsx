@@ -1,11 +1,11 @@
 import React, {useState,useEffect} from "react";
 import { Link, useHistory} from "react-router-dom";
 import Styles from './login-styles.scss'
-import {Footer,Input,LoginHeader, FormStatus, Spinner} from "@/presentation/components";
+import {Footer,Input,LoginHeader, FormStatus, SubmitButton} from "@/presentation/components";
 import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from "@/presentation/protocols/validation";
 import { Authentication,SaveAccessToken } from "@/domain/usecases";
-//testa sem o spinner
+
 type Props = {
     validation: Validation
     authentication: Authentication
@@ -15,19 +15,25 @@ type Props = {
 const Login: React.FC<Props>=({validation,authentication, saveAccessToken}: Props) => { 
    const history = useHistory()
    const [state,setState] = useState({
+    isLoading: false,
+    isFormInvalid:true,
     email:'',
     password:'',
-    isLoading: false,
-    mainError:'',
     emailError:'',
-    passwordError:''
+    passwordError:'',
+    mainError:'',
 
    })
    useEffect(()=> {
+
+    const emailError = validation.validate('email', state.email)
+    const passwordError = validation.validate('password', state.password)
+
     setState({
         ...state,
-        emailError: validation.validate('email', state.email),
-        passwordError: validation.validate('password', state.password)
+        emailError,
+        passwordError,
+        isFormInvalid: !!emailError || !!passwordError
     })
     
    },[state.email,state.password])
@@ -35,7 +41,7 @@ const Login: React.FC<Props>=({validation,authentication, saveAccessToken}: Prop
    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     try {
-        if (state.isLoading || state.emailError || state.passwordError){
+        if (state.isLoading || state.isFormInvalid){
             return
         }
         setState({ ...state , isLoading: true})
@@ -62,8 +68,8 @@ const Login: React.FC<Props>=({validation,authentication, saveAccessToken}: Prop
                 <h2>Login</h2>
                 <Input type="email" name="email" placeholder="Digite seu e-mail"/>
                 <Input type="password" name="password" placeholder="Digite sua senha"/>
-                <button data-testid="submit" disabled={!!state.emailError || !!state.passwordError} className={Styles.submit} type="submit">Entrar</button>
-                <Link data-testid="signup" to ="/signup" className={Styles.link}>Criar conta</Link>
+                <SubmitButton text="Entrar"/>
+                <Link data-testid="signup-link" to ="/signup" className={Styles.link}>Criar conta</Link>
                 <FormStatus/>
             </form>
             </Context.Provider>

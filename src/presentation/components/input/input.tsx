@@ -1,5 +1,5 @@
 
-import React, { useContext , useState} from "react"
+import React, { useContext} from "react"
 import Context from '@/presentation/contexts/form/form-context'
 import Styles from './input-styles.scss'
 
@@ -11,20 +11,21 @@ const Input : React.FC<Props> = (props:Props) => {
     const enableInput = (event: React.FocusEvent<HTMLInputElement>): void => {
         event.target.readOnly = false
     }
-    const getStatus = (): string => {
-        return error ? '🔴' : '🟢'
-
-    }
-    const getTitle =(): string =>{
-        return error || 'tudo ok'
-
-    }
-
+    
     const handleChange = (event: React.FocusEvent<HTMLInputElement>): void => {
         setState({
             ...state,
             [event.target.name]: event.target.value
         })
+    }
+
+    const getStatus = (): string => {
+        return error ? '🔴' : '🟢'
+
+    }
+    const getTitle =(): string =>{
+        return error || 'Tudo certo!'
+
     }
     return (
        <div className={Styles.inputWrap}>

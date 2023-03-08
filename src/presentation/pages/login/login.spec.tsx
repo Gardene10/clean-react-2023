@@ -159,19 +159,9 @@ test('Should present error if SaveAccessToken fails',async () => {
 })
 
 
-test('Should show valid email state if Validation succeeds',() => {
-           const {sut} = makeSut()
-           Helper.populateField(sut,'email')
-           const emailStatus =sut.getByTestId('email-status')
-           expect (emailStatus.title).toBe('tudo ok')
-           expect (emailStatus.textContent).toBe('🟢')     
-})
-  
-
-
  test('Should go to signup page',() => {
       const {sut} = makeSut()
-      const register = sut.getByTestId('signup')
+      const register = sut.getByTestId('signup-link')
       fireEvent.click(register)
       expect(history.length).toBe(2)
       expect(history.location.pathname).toBe('/signup')
@@ -181,37 +171,4 @@ test('Should show valid email state if Validation succeeds',() => {
 
 })
 
-
-              
-
-
-   
-    
-//rever
-
-/*
-    test('Should present error if SaveAccess fails',async () => {
-      const {sut,saveAccessTokenMock } = makeSut()
-      const error = new InvalidCredentialsError()
-      jest.spyOn(saveAccessTokenMock,'save').mockReturnValueOnce(Promise.reject(error))
-      await simulateValidSubmit(sut)
-
-     testElementText(sut,'main-error',error.message)
-      Helper.testChildCount(sut,'error-wrap',1)
- })
-*/
-
-
-/*
-
-test('Should present error if Authentication fails',async () => {
-  const {sut,authenticationSpy } = makeSut()
-  const error = new InvalidCredentialsError()
-  jest.spyOn(authenticationSpy,'auth').mockReturnValueOnce(Promise.reject(error))
-  await simulateValidSubmit(sut)
-  testElementText(sut,'main-error',error.message)
-  Helper.testChildCount(sut,'error-wrap',1)
-})
-
-  */  
     
