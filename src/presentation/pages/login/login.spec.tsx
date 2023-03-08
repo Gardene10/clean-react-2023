@@ -149,6 +149,16 @@ test('Should call SaveAccessToken on success',async () => {
   expect(history.location.pathname).toBe('/')
 })
 
+test('Should present error if SaveAccessToken fails',async () => {
+  const {sut,saveAccessTokenMock } = makeSut()
+  const error = new InvalidCredentialsError()
+  jest.spyOn(saveAccessTokenMock,'save').mockRejectedValueOnce(error)
+  await simulateValidSubmit(sut)
+  Helper.testElementText(sut,'main-error',error.message)
+  Helper.testChildCount(sut,'error-wrap',1)
+})
+
+
 test('Should show valid email state if Validation succeeds',() => {
            const {sut} = makeSut()
            Helper.populateField(sut,'email')
@@ -158,14 +168,6 @@ test('Should show valid email state if Validation succeeds',() => {
 })
   
 
-    test('Should present error if SaveAccessToken fails',async () => {
-      const {sut,saveAccessTokenMock } = makeSut()
-      const error = new InvalidCredentialsError()
-      jest.spyOn(saveAccessTokenMock,'save').mockReturnValueOnce(Promise.reject(error))
-      await simulateValidSubmit(sut)
-      Helper.testElementText(sut,'main-error',error.message)
-      Helper.testChildCount(sut,'error-wrap',1)
- })
 
  test('Should go to signup page',() => {
       const {sut} = makeSut()
@@ -180,16 +182,9 @@ test('Should show valid email state if Validation succeeds',() => {
 })
 
 
-    // nao refatorei esse test pq o getBytestid nao estava ok
-  //const testElementText =(sut: RenderResult,fieldName: string , text:string ): void => {
-    //const el = sut.getByTestId(fieldName)    //mundei de getByTestId para findByTestId
-    //expect(el.textContent).toBe(text)
               
 
-    // nao refatorei esse test pq o getBytestid nao estava ok
-  //const testElementText =(sut: RenderResult,fieldName: string , text:string ): void => {
-    //const el = sut.getByTestId(fieldName)    //mundei de getByTestId para findByTestId
-    //expect(el.textContent).toBe(text)
+
    
     
 //rever
