@@ -6,7 +6,6 @@ import {render,RenderResult,fireEvent,cleanup,waitFor} from '@testing-library/re
 import {Login} from '@/presentation/pages'
 import { ValidationStub, AuthenticationSpy , SaveAccessTokenMock, Helper} from '@/presentation/test'
 import { InvalidCredentialsError } from '@/domain/errors'
-import { testElementText } from '@/presentation/test/form-helper'
 
 type SutTypes = {
   sut: RenderResult

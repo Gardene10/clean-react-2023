@@ -44,7 +44,6 @@ const Login: React.FC<Props>=({validation,authentication, saveAccessToken}: Prop
           password: state.password
        })
         await saveAccessToken.save(account.accessToken)
-        localStorage.setItem('accessToken', account.accessToken)
         history.replace('/')
     } catch (error) {
         setState({ 
@@ -52,7 +51,7 @@ const Login: React.FC<Props>=({validation,authentication, saveAccessToken}: Prop
              isLoading: false,
              mainError: error.message
         })
-     }
+      }
 
    }
     return (
