@@ -13,7 +13,7 @@ export const testChildCount =(sut: RenderResult, fieldName: string, count: numbe
 
   export const testStatusForField =(sut: RenderResult, fieldName:string , validationError?: string ): void => {
     const fieldStatus =sut.getByTestId(`${fieldName}-status`)
-    expect (fieldStatus.title).toBe(validationError || 'tudo ok')
+    expect (fieldStatus.title).toBe(validationError || 'Tudo certo!')
     expect (fieldStatus.textContent).toBe(validationError ? '🔴': '🟢')
   }
 

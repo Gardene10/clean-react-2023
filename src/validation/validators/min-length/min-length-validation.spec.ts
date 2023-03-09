@@ -2,22 +2,30 @@ import { InvalidFieldError } from "@/validation/errors"
 import { MinlengthValidation } from "./min-length-validation"
 import faker from 'faker'
 
-const makeSut = (): MinlengthValidation => new MinlengthValidation(faker.database.column(),5)
+const makeSut = (field: string): MinlengthValidation => new MinlengthValidation(field,5)
 
 describe('MinlengthValidation',() => {
     test('Shold return error if value is invalid',() =>{
-        const sut = makeSut()
-        const error = sut.validate(faker.random.alphaNumeric(4))
+        const field = faker.database.column()
+        const sut = makeSut(field)
+        const error = sut.validate({[field]: faker.random.alphaNumeric(4)})
         expect(error).toEqual(new InvalidFieldError())
 
     })
 
     test('Shold return falsy if value is valid',() =>{
-        const sut = makeSut()
-        const error = sut.validate(faker.random.alphaNumeric(5))
+        const field = faker.database.column()
+        const sut = makeSut(field)
+        const error = sut.validate({[field]:faker.random.alphaNumeric(5)})
         expect(error).toBeFalsy()
 
     })
     
+    test('Shold return falsy if field does not exist in schema',() =>{
+        const sut = makeSut(faker.database.column())
+        const error = sut.validate({[faker.database.column()]:faker.random.alphaNumeric(5)})
+        expect(error).toBeFalsy()
+
+    })
     
 })    

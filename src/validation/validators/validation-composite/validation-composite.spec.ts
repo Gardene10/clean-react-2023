@@ -30,14 +30,14 @@ describe('ValidationComposite',() => {
         fieldvalidationsSpy[0].error = new Error(errorMessage)
         fieldvalidationsSpy[1].error = new Error(faker.random.words())
 
-        const error = sut.validate(fieldName, faker.random.word())  
+        const error = sut.validate(fieldName, {[fieldName]: faker.random.word()})  
         expect(error).toBe(error)
     })
 
     test('Shold return error if any validation fails',() =>{
         const fieldName = faker.database.collation()
         const {sut} = makeSut(fieldName)
-        const error = sut.validate('any_field',faker.random.word())  
+        const error = sut.validate('any_field',{[fieldName]: faker.random.word()})  
         expect(error).toBeFalsy()
     })
 })    
